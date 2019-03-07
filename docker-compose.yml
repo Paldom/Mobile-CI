@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.0'
 
 networks:
   cinet:
@@ -24,10 +24,10 @@ services:
       - cinet
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /usr/bin/docker:/usr/bin/docker
-      - jenkins-data:/var/jenkins_home
+      - /usr/local/bin/docker:/usr/bin/docker
+      - jenkins_data:/var/jenkins_home
     depends_on:
-      - sonar
+      - sonarqube
 
   sonarqube:
     image: dpal/docker-sonarqube-mobile-ci
