@@ -17,11 +17,11 @@ Test feature runs on following mobile applications:
 - **Android:** [Mobile-CI-Android-Example](https://github.com/Paldom/Mobile-CI-Android-Example)
 - **iOS:** [Mobile-CI-iOS-Example](https://github.com/Paldom/Mobile-CI-iOS-Example)
 
-## Pipeline
+## Pipeline
 
 CI and CD pipelines (defined in jenkinsfile) contain the following steps:
 
-### CI Pipeline
+### CI Pipeline
 
 Trigger: new `feature` branch (with pull request on `develop` branch).
 
