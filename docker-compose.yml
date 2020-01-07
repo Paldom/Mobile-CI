@@ -10,6 +10,7 @@ volumes:
   sonarqube_extensions:
   postgresql:
   postgresql_data:
+  artifactory_data:
   jenkins_data:
     driver: local
 
@@ -18,39 +19,58 @@ services:
   jenkins:
     image: dpal/docker-jenkins-mobile-ci
     ports:
-      - "8080:8080"
-      - "50000:50000"
+      - 8080:8080
+      - 50000:50000
     networks:
       - cinet
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/local/bin/docker:/usr/bin/docker
       - jenkins_data:/var/jenkins_home
+    restart: always
     depends_on:
       - sonarqube
 
   sonarqube:
     image: dpal/docker-sonarqube-mobile-ci
     ports:
-      - "9000:9000"
+      - 9000:9000
     networks:
       - cinet
     environment:
-      - sonar.jdbc.url=jdbc:postgresql://db:5432/sonar
+      - SONARQUBE_JDBC_USERNAME=sonar
+      - SONARQUBE_JDBC_PASSWORD=sonar
+      - SONARQUBE_JDBC_URL=jdbc:postgresql://db:5432/sonar
     volumes:
       - sonarqube_conf:/opt/sonarqube/conf
       - sonarqube_data:/opt/sonarqube/data
       - sonarqube_extensions:/opt/sonarqube/extensions
+    restart: always
+    depends_on:
+      - db
 
+  artifactory:
+    image: docker.bintray.io/jfrog/artifactory-oss:latest
+    ports:
+     - 8081:8081
+    networks:
+     - cinet
+    volumes:
+     - artifactory_data:/var/opt/jfrog/artifactory
+    restart: always
+    
   db:
-    image: postgres
+    image: postgres:latest
+    ports:
+      - 5432:5432
     networks:
       - cinet
     environment:
       - POSTGRES_USER=sonar
       - POSTGRES_PASSWORD=sonar
+      - POSTGRES_DB=sonar
     volumes:
       - postgresql:/var/lib/postgresql
       - postgresql_data:/var/lib/postgresql/data
-
+    restart: always
 

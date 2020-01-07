@@ -36,8 +36,8 @@ Trigger: new `release` branch.
 
 1. Code analysis and lint check with Sonarqube.
 2. Run full e2e regression testsuit (all Gherkin tests) native instrumented test.
-3. Save build to artifactory (GitHub in this case) with fastlane.
-4. Upload build to Fabric with fastlane.
+3. Save build to artifactory (JFrog & GitHub in this case) with fastlane.
+4. Upload build to Firebase App Distribution with fastlane.
 5. Upload build to Play Store Beta and Testflight.
 6. Create report.
 
@@ -56,5 +56,5 @@ git clone https://github.com/Paldom/Mobile-CI.git
 2. Run `docker-compose`:
 
 ```sh
-docker-compose up
+docker-compose up -d
 ```
