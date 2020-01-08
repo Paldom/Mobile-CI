@@ -25,7 +25,7 @@ services:
       - sonarqube
 
   sonarqube:
-    image: dpal/docker-sonarqube-mobile-ci
+    image: dpal/docker-sonarqube-mobile-ci:1.2.0
     ports:
       - 9000:9000
     networks:
@@ -38,6 +38,7 @@ services:
       - ./data/sonarqube/conf:/opt/sonarqube/conf
       - ./data/sonarqube/data:/opt/sonarqube/data
       - ./data/sonarqube/extensions:/opt/sonarqube/extensions
+      - ./data/sonarqube/logs:/opt/sonarqube/logs
     restart: always
     depends_on:
       - db
