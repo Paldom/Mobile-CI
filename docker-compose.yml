@@ -5,14 +5,7 @@ networks:
     driver: bridge
 
 volumes:
-  sonarqube_conf:
-  sonarqube_data:
-  sonarqube_extensions:
   postgresql:
-  postgresql_data:
-  artifactory_data:
-  jenkins_data:
-    driver: local
 
 services:
 
@@ -26,7 +19,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/local/bin/docker:/usr/bin/docker
-      - jenkins_data:/var/jenkins_home
+      - ./data/jenkins:/var/jenkins_home
     restart: always
     depends_on:
       - sonarqube
@@ -42,21 +35,21 @@ services:
       - SONARQUBE_JDBC_PASSWORD=sonar
       - SONARQUBE_JDBC_URL=jdbc:postgresql://db:5432/sonar
     volumes:
-      - sonarqube_conf:/opt/sonarqube/conf
-      - sonarqube_data:/opt/sonarqube/data
-      - sonarqube_extensions:/opt/sonarqube/extensions
+      - ./data/sonarqube/conf:/opt/sonarqube/conf
+      - ./data/sonarqube/data:/opt/sonarqube/data
+      - ./data/sonarqube/extensions:/opt/sonarqube/extensions
     restart: always
     depends_on:
       - db
 
   artifactory:
-    image: docker.bintray.io/jfrog/artifactory-oss:latest
+    image: docker.bintray.io/jfrog/artifactory-oss:6.16.0
     ports:
      - 8081:8081
     networks:
      - cinet
     volumes:
-     - artifactory_data:/var/opt/jfrog/artifactory
+     - ./data/artifactory:/var/opt/jfrog/artifactory
     restart: always
     
   db:
@@ -71,6 +64,6 @@ services:
       - POSTGRES_DB=sonar
     volumes:
       - postgresql:/var/lib/postgresql
-      - postgresql_data:/var/lib/postgresql/data
+      - ./data/postgresql:/var/lib/postgresql/data
     restart: always
 
