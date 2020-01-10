@@ -6,6 +6,7 @@ networks:
 
 volumes:
   postgresql:
+  postgresql_data:
 
 services:
 
@@ -25,15 +26,15 @@ services:
       - sonarqube
 
   sonarqube:
-    image: dpal/docker-sonarqube-mobile-ci:1.2.0
+    image: dpal/docker-sonarqube-mobile-ci:1.2
     ports:
       - 9000:9000
     networks:
       - cinet
     environment:
-      - SONARQUBE_JDBC_USERNAME=sonar
-      - SONARQUBE_JDBC_PASSWORD=sonar
-      - SONARQUBE_JDBC_URL=jdbc:postgresql://db:5432/sonar
+      - sonar.jdbc.username=sonar
+      - sonar.jdbc.password=sonar
+      - sonar.jdbc.url=jdbc:postgresql://db:5432/sonar
     volumes:
       - ./data/sonarqube/conf:/opt/sonarqube/conf
       - ./data/sonarqube/data:/opt/sonarqube/data
@@ -65,6 +66,6 @@ services:
       - POSTGRES_DB=sonar
     volumes:
       - postgresql:/var/lib/postgresql
-      - ./data/postgresql:/var/lib/postgresql/data
+      - postgresql_data:/var/lib/postgresql/data
     restart: always
 
