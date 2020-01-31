@@ -1,0 +1,26 @@
+server {
+    listen ${NGINX_PORT};
+    server_name "jenkins.${NGINX_HOST}";
+    location / {
+        resolver 127.0.0.11 valid=30s;
+        proxy_pass http://jenkins:80;
+    }
+}
+
+server {
+    listen ${NGINX_PORT};
+    server_name "sonarqube.${NGINX_HOST}";
+    location / {
+        resolver 127.0.0.11 valid=30s;
+        proxy_pass http://sonarqube:80;
+    }
+}
+
+server {
+    listen ${NGINX_PORT};
+    server_name "artifactory.${NGINX_HOST}";
+    location / {
+        resolver 127.0.0.11 valid=30s;
+        proxy_pass http://artifactory:80;
+    }
+}
