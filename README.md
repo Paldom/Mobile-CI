@@ -1,10 +1,10 @@
 # Mobile-CI
 
-Continuous Integration and Delivery toolchain for native Android and iOS applications, built with Docker, Jenkins, Sonarqube, Fastlane, GitHub, XCode, Android SDK, Appium, Cucumber, AWS Device Farm and Firebase. CI flow is based on a BDD workflow.
+Continuous Integration and Delivery toolchain for native Android and iOS applications, built with Docker, Jenkins, Sonarqube, Fastlane, GitHub, Xcode, Android SDK, Cucumber and Firebase. Testing steps are based on a BDD workflow.
 
 ## BDD 
 
-Automated BDD tests are written in Gherkin definitions (.feature files). Gherkin tests are implemented with native Android instrumented tests and iOS XCUITests, feature files are interpreted by GreenCoffee and Cucumberish.
+Automated BDD tests are written in Gherkin definitions (`.feature` files). Gherkin tests are implemented with native Android instrumented tests and iOS XCUITests, feature files are interpreted by GreenCoffee and Cucumberish.
 
 ### Gherkin example
 
