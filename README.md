@@ -70,7 +70,7 @@ docker-compose up -d
 
 Follow the guide below about how to set up a Jenkins slave for Android and iOS on a physical device.
 
-[Jenkins slave on Mac OS](https://github.com/Paldom/Mobile-CI/MAC_OS_JENKINS_SLAVE.md)
+[Jenkins slave on Mac OS](https://github.com/Paldom/Mobile-CI/blob/master/MAC_OS_JENKINS_SLAVE.md)
 
 4. Configure Jenkins, environment variables, connect slave
 
