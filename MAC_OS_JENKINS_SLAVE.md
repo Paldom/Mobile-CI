@@ -1,6 +1,6 @@
 # Jenkins slave on Mac OS
 
-Ultimate walktrough for setting up a Jenkins slave on Mac OS for iOS and Android development (and more).
+Ultimate walkthrough for setting up a Jenkins slave on Mac OS for iOS and Android development (and more).
 
 ## Mac OS setup
 
@@ -10,8 +10,8 @@ Ultimate walktrough for setting up a Jenkins slave on Mac OS for iOS and Android
 - Proxy setup if required (http_proxy, https_proxy environment variable is set correctly, proxy is added in network config). 
   Mac OS usually has troubles with proxies that require authentications.
 - Clean-up desk: keep only System Preferences, Safari, Finder and Terminal after install. Terminal needs to be added to desk.
-- Preapre all technical users required accessing other services, like Git, Artifactory, Sonarqube etc.
-- Connectivity: use Ethernet interface, turn off WiFi and Bluetooth.
+- Prepare all technical users required accessing other services, like Git, Artifactory, Sonarqube etc.
+- Connectivity: use Ethernet interface, turn off Wi-Fi and Bluetooth (if wireless Mouse & Keyboard not connected).
 - Energy saving settings: enable "prevent sleeping when display is off", enable "wake for "Wi-Fi access", disable "power nap"
 - Mobile phones (Android, iOS) connected to computer, with Black Screen app installed. 
 
@@ -36,9 +36,9 @@ source ~/.bash_profile
 
 Accept SDK licenses after installation and try a gradle command (e.g. `./gradlew build`) on a new project.
 
-## Other useful softwares
+## Other useful software
 
-Not required, but practial for debugging/development or if you would use Mac slave for web development. 
+Not required, but practical for debugging/development or if you would use Mac slave for web development. 
 
 - Visual Studio Code: https://code.visualstudio.com/
   Add code to path https://code.visualstudio.com/docs/setup/mac#launching-from-the-command-line
@@ -55,7 +55,7 @@ Install node and npm with nvm. Link: https://github.com/nvm-sh/nvm
 
 Install nvm:
 ```sh
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash
 ```
 
 Add to bash profile:
@@ -235,12 +235,13 @@ run-sonar-swift
 curl -sL https://firebase.tools | bash
 ```
 
-## Other useful CLI tools
+## Other useful CLI tools to setup, analyze and troubleshoot network connection
 
-- wget
-- nmap
-- telnet
-- openconnect
+- wget - ```brew install wget```
+- nmap - (https://nmap.org/download.html#macosx)
+- telnet - ```brew install telnet```
+- openconnect - ```brew install openconnect```
+- tcpdump - installed by default: 
 
 ## Setup access for remote services
 
@@ -259,7 +260,7 @@ Configure git account...
 
 Copy your public key `pbcopy < ~/.ssh/id_rsa.pub` and add it to your account (GitHub, BitBucket etc.).
 
-If your SSH key is secured with passpharse, the following steps are also necessary. Moreover, using an SSH key generated with non-empty passphrase for git, on a Jenkins slave, can cause connenction issues.
+If your SSH key is secured with passphrase, the following steps are also necessary. Moreover, using an SSH key generated with non-empty passphrase for git, on a Jenkins slave, can cause connection issues.
 
 Create `~/.ssh/config` to load passphrases into ssh-agent from keychain:
 ```
@@ -289,6 +290,7 @@ Configure JFrog artifactory server in `jfrog` CLI and use it as default:
 jfrog rt c rt-server-1 --insecure-tls=true --url=http://localhost:8081/artifactory --apikey=APIKEY
 jfrog rt use rt-server-1
 ```
+(type `n` twice for last command) 
 
 Try server connection:
 ```sh
@@ -389,6 +391,47 @@ Give permission if required:
 sudo chown root:wheel ~/Library/LaunchAgents/org.jenkins-ci.slave.plist
 ```
 
+## Cleanup Xcode caches and archives periodically
+
+Xcode archives and caches with continious builds can end up in large storage consupmtion. You can keep free disk space via scheduled cleanup.
+
+Go to home dir: 
+```sh
+cd ~
+```
+
+and create `cleanup.sh` file with following contents
+
+```sh
+#!/bin/bash
+
+# clear unused devices
+xcrun simctl delete unavailable
+
+# clear archives older than 1 day
+find ~/Library/Developer/Xcode/Archives -mtime +1 -delete
+
+# clear simulator caches older than 1 day
+find ~/Library/Developer/CoreSimulator/Caches/dyld/ -mtime +1 -delete
+```
+
+Schedule crontab to run `cleanup.sh` every day at 04:00.
+
+```sh
+crontab -e
+```
+
+Add following content:
+
+```sh
+0 4 * * * cd ~/ && ./cleanup.sh
+```
+
+Check crontab settings:
+
+```sh
+crontab -l
+```
 
 ## Test slave
 
