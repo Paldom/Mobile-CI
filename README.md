@@ -80,6 +80,7 @@ Find default configuration of `mac` slave and set the correct address, credentia
 
 Set up proper environment variable values for `mac` slave:
 
+- `APP_STORE_API_ISSUER_ID`, `APP_STORE_API_KEY_CONTENT`, `APP_STORE_API_KEY_ID`  - App Store Connent API key.
 - `APPLE_ID` - Your Apple Developer ID.
 - `FASTLANE_PASSWORD` - Your Apple Developer password.
 - `ITC_TEAM_ID` - Itunes Connect Team ID.
