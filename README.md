@@ -2,7 +2,7 @@
 
 Continuous Integration and Delivery toolchain for native Android and iOS applications, built with Docker, Jenkins, Sonarqube, Fastlane, GitHub, Xcode, Android SDK, Cucumber and Firebase. Testing steps are based on a BDD workflow.
 
-## BDD 
+## BDD
 
 Automated BDD tests are written in Gherkin definitions (`.feature` files). Gherkin tests are implemented with native Android instrumented tests and iOS XCUITests, feature files are interpreted by GreenCoffee and Cucumberish.
 
@@ -28,18 +28,17 @@ Trigger: new `feature` branch (with pull request on `develop` branch).
 1. Code analysis and lint check with Sonarqube.
 2. Run Unit tests.
 3. Run mocked UI test (tagged with @smoke) in cloud with native instrumented test.
-4. Report feedback to GitHub.
+4. Code analysis and lint check with Sonarqube.
+5. Report feedback to GitHub.
 
-### CD Pipline - TBD
+### CD Pipline
 
 Trigger: new `release` branch.
 
-1. Code analysis and lint check with Sonarqube.
-2. Run full e2e regression testsuit (all Gherkin tests) native instrumented test.
-3. Save build to artifactory (JFrog & GitHub in this case) with fastlane.
-4. Upload build to Firebase App Distribution with fastlane.
-5. Upload build to Play Store Beta and Testflight.
-6. Create report.
+1. Run full e2e regression testsuit (all Gherkin tests) native instrumented test.
+2. Save build to artifactory (JFrog & GitHub in this case) with fastlane.
+3. Upload build to Firebase App Distribution with fastlane.
+4. Upload build to Play Store Beta and Testflight.
 
 ## Architecture and docker images
 
@@ -70,7 +69,7 @@ docker-compose up -d
 
 Follow the guide below about how to set up a Jenkins slave for Android and iOS on a physical device.
 
-[Jenkins slave on Mac OS](https://github.com/Paldom/Mobile-CI/blob/master/MAC_OS_JENKINS_SLAVE.md)
+[Jenkins node on Mac OS](https://github.com/Paldom/Mobile-CI/blob/master/MAC_OS_JENKINS_SLAVE.md)
 
 4. Configure Jenkins, environment variables, connect slave
 
